@@ -1,0 +1,26 @@
+
+
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "mutate": [
+    "analyzer.ts" 
+  ],
+  "packageManager": "npm",
+  "reporters": [
+    "html",
+    "clear-text",
+    "progress"
+  ],
+  "testRunner": "jest",
+  "mutator": "typescript",
+
+  "concurrency": 4, 
+  "checkers": [
+    "typescript"
+  ],
+  "jest": {
+
+    "configFile": "jest.config.js" 
+  },
+  "coverageAnalysis": "perTest"
+}

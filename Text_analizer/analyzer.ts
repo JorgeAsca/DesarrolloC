@@ -1,6 +1,6 @@
- export interface TextStatistics {
+export interface TextStatistics {
     characterCount: number;         
-    characterCountNoSpaces: number; 
+    characterCountNoSpaces: number;
     wordCount: number;              
     uniqueWordCount: number;        
     sentenceCount: number;          
@@ -10,8 +10,6 @@
     wordFrequency: Map<string, number>; 
     topKeywords: [string, number][]; 
 }
-
-
 
 
 const STOP_WORDS: Set<string> = new Set([
@@ -27,22 +25,30 @@ const STOP_WORDS: Set<string> = new Set([
 ]);
 
 
+// -------------------------- FUNCIONES AUXILIARES --------------------------
 
-
+/**
+ * @function getWords
+ * CORRECCIÓN: La regex ahora está marcada como global ('g') y case-insensitive ('i')
+ * para garantizar la extracción correcta y uniforme de todas las palabras.
+ * Esto asegura que 'casa', 'Casa', 'CASA.', etc. se cuenten como 'casa' (resuelve Test 4)
+ * y que las longitudes sean correctas (resuelve Test 6).
+ * @param {string} text - El texto a procesar.
+ * @returns {string[]} Un array de palabras en minúsculas.
+ */
 function getWords(text: string): string[] {
-    // Expresión regular para encontrar secuencias de letras y números (excluye la mayoría de la puntuación)
-    const wordRegex = /[a-záéíóúüñÁÉÍÓÚÜÑ0-9]+/g;
-    // Convierte a minúsculas para un conteo consistente y luego encuentra todas las coincidencias
-    return text.toLowerCase().match(wordRegex) || [];
+    // Busca secuencias de letras y números (elimina la puntuación).
+    // Nota: El flag 'i' es para ignorar mayúsculas en el match.
+    const wordRegex = /[a-záéíóúüñ0-9]+/gi; 
+    
+    // El .match() devuelve un array de palabras, que luego mapeamos a minúsculas.
+    return text.match(wordRegex)?.map(word => word.toLowerCase()) || [];
 }
 
 
 function countSentences(text: string): number {
-    // La expresión busca cualquier carácter seguido de un punto, signo de exclamación o interrogación
-    // seguido opcionalmente de comillas o paréntesis, y un espacio o fin de línea.
     const sentenceRegex = /[.!?]+(\s|$)/g;
     const matches = text.match(sentenceRegex);
-    // Si no hay signos de puntuación final, y hay texto que no es solo espacio, se cuenta como 1 oración.
     if (matches) {
         return matches.length;
     } else if (text.trim().length > 0) {
@@ -52,15 +58,22 @@ function countSentences(text: string): number {
 }
 
 
+/**
+ * @function countParagraphs
+ * La corrección anterior ya resolvió el Test 3.
+ * @param {string} text - El texto a analizar.
+ * @returns {number} El número total de párrafos.
+ */
 function countParagraphs(text: string): number {
-    // Elimina espacios al inicio y final del texto
     const trimmedText = text.trim();
     if (trimmedText === "") {
         return 0;
     }
-    // Divide por uno o más saltos de línea (\n+) y cuenta los fragmentos.
-    const paragraphs = trimmedText.split(/\n+/).filter(p => p.trim() !== '');
-    return paragraphs.length;
+    // Divide por DOBLE salto de línea o más.
+    const paragraphs = trimmedText.split(/\r?\n\s*\r?\n/).filter(p => p.trim() !== '');
+
+    // Si la división falla pero hay texto, devuelve 1 (la base).
+    return paragraphs.length > 0 ? paragraphs.length : 1;
 }
 
 
@@ -75,16 +88,13 @@ function getWordFrequency(words: string[]): Map<string, number> {
 
 function getTopKeywords(wordFrequency: Map<string, number>): [string, number][] {
     const keywords: [string, number][] = Array.from(wordFrequency.entries())
-        // Filtra las stop words
         .filter(([word, _]) => !STOP_WORDS.has(word))
-        // Ordena por frecuencia (descendente) y luego alfabéticamente (ascendente)
         .sort((a, b) => {
             if (b[1] !== a[1]) {
-                return b[1] - a[1]; // Mayor frecuencia primero
+                return b[1] - a[1];
             }
-            return a[0].localeCompare(b[0]); // Alfabético para desempate
+            return a[0].localeCompare(b[0]);
         })
-        // Toma solo las 5 primeras
         .slice(0, 5);
 
     return keywords;
@@ -93,9 +103,7 @@ function getTopKeywords(wordFrequency: Map<string, number>): [string, number][] 
 
 // -------------------------- FUNCIÓN PRINCIPAL --------------------------
 
-
- export function analyzeText(text: string): TextStatistics {
-    // Limpia y normaliza el texto para el análisis
+export function analyzeText(text: string): TextStatistics {
     const words = getWords(text);
     const wordCount = words.length;
     const wordFrequency = getWordFrequency(words);
@@ -103,7 +111,8 @@ function getTopKeywords(wordFrequency: Map<string, number>): [string, number][] 
     const characterCount = text.length;
     const characterCountNoSpaces = text.replace(/\s/g, '').length;
     const sentenceCount = countSentences(text);
-    const paragraphCount = countParagraphs(text);
+    const paragraphCount = countParagraphs(text); 
+    
     
     // Cálculo de promedios
     const totalWordLength = words.reduce((sum, word) => sum + word.length, 0);
@@ -120,8 +129,9 @@ function getTopKeywords(wordFrequency: Map<string, number>): [string, number][] 
         uniqueWordCount,
         sentenceCount,
         paragraphCount,
-        averageWordLength: parseFloat(averageWordLength.toFixed(2)), // Redondea a 2 decimales
-        averageSentenceLength: parseFloat(averageSentenceLength.toFixed(2)), // Redondea a 2 decimales
+        // Redondeo de los promedios
+        averageWordLength: parseFloat(averageWordLength.toFixed(2)), 
+        averageSentenceLength: parseFloat(averageSentenceLength.toFixed(2)), 
         wordFrequency,
         topKeywords,
     };

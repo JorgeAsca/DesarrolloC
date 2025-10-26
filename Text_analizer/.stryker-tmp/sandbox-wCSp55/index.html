@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Text Analyzer Pro</h1>
+        <p>Herramienta de análisis estadístico de texto con TypeScript.</p>
+    </header>
+
+    <main class="container">
+        <section class="text-input-section">
+            <label for="text-to-analyze">Introduce tu texto aquí:</label>
+            <textarea id="text-to-analyze" placeholder="Pega o escribe tu artículo..." rows="15"></textarea>
+            
+            <div class="realtime-stats">
+                <p>Caracteres (con espacios): <span id="char-count-realtime">0</span></p>
+                <p>Palabras: <span id="word-count-realtime">0</span></p>
+            </div>
+
+            <button id="analyze-button">Analizar Texto Completo</button>
+        </section>
+
+        <section class="results-section">
+            <h2>Resultados del Análisis</h2>
+            <div id="results-display" class="results-grid">
+                <div class="card stat-card" id="card-char-no-spaces">
+                    <h3>Caracteres (sin espacios)</h3>
+                    <p class="stat-value" data-stat="characterCountNoSpaces">0</p>
+                </div>
+                <div class="card stat-card" id="card-sentences">
+                    <h3>Oraciones</h3>
+                    <p class="stat-value" data-stat="sentenceCount">0</p>
+                </div>
+                <div class="card stat-card" id="card-paragraphs">
+                    <h3>Párrafos</h3>
+                    <p class="stat-value" data-stat="paragraphCount">0</p>
+                </div>
+                <div class="card stat-card" id="card-unique-words">
+                    <h3>Palabras Únicas</h3>
+                    <p class="stat-value" data-stat="uniqueWordCount">0</p>
+                </div>
+                <div class="card stat-card" id="card-avg-word-length">
+                    <h3>Longitud Media de Palabra</h3>
+                    <p class="stat-value" data-stat="averageWordLength">0.00</p>
+                </div>
+                <div class="card stat-card" id="card-avg-sentence-length">
+                    <h3>Palabras por Oración</h3>
+                    <p class="stat-value" data-stat="averageSentenceLength">0.00</p>
+                </div>
+            </div>
+
+            <div class="keywords-section card">
+                <h3>Palabras Clave Principales (Top 5)</h3>
+                <ol id="top-keywords-list">
+                    <li class="placeholder">Aún no hay análisis.</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+    
+    <script src="./dist/main.js"></script>
+</body>
+</html>
