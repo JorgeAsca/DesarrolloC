@@ -1,0 +1,231 @@
+:root {
+    
+    --primary-color: #004d99;      
+
+    --accent-color: #ffc107;       
+    --accent-hover: #e0ac00;      
+    
+    --secondary-color: #6c757d;    
+    --error-color: #c82333;        
+    --success-color: #218838;      
+    --bg-color: #f4f6f9;           
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --border-radius: 5px;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color); 
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); 
+}
+
+main {
+    padding: 20px 15px; 
+}
+
+
+#registrationForm {
+    max-width: 100%;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--primary-color); 
+    padding: 0 10px;
+    margin-left: -5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+input:not([type="radio"]):not([type="checkbox"]), select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: var(--border-radius);
+    box-sizing: border-box; 
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+textarea {
+    resize: vertical;
+}
+
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 77, 153, 0.25); 
+    outline: none;
+}
+
+input:hover, select:hover, textarea:hover {
+    border-color: #999;
+}
+
+
+label[for].required-field, input[required]:not([type="radio"]):not([type="checkbox"]) + label::after, .required-note {
+    
+}
+
+
+.radio-group, .form-group input[type="checkbox"] + label {
+    display: block;
+}
+
+.radio-group label, .form-group input[type="checkbox"] + label {
+    display: inline-block;
+    margin-right: 15px;
+    font-weight: normal;
+}
+
+
+#experienceLevel {
+    -webkit-appearance: none;
+    width: calc(100% - 70px); 
+    height: 8px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    margin-top: 10px;
+}
+
+#experienceLevel::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+#experienceValue {
+    font-weight: bold;
+    color: var(--primary-color); 
+    margin-left: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap; 
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, opacity 0.3s;
+    flex-grow: 1; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+button[type="submit"] {
+    background-color: var(--success-color);
+    color: white;
+}
+
+button[type="reset"] {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+
+button[type="button"] {
+    background-color: var(--accent-color); 
+    color: #333; 
+    border: 1px solid var(--accent-hover); 
+}
+
+button:hover:not(:disabled) {
+    opacity: 1; 
+    background-color: var(--primary-light); 
+}
+
+button[type="button"]:hover {
+    background-color: var(--accent-hover); 
+}
+
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+.error-message {
+    color: var(--error-color);
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.input-error {
+    border: 2px solid var(--error-color) !important;
+}
+
+
+@media (min-width: 768px) {
+    main {
+        padding: 40px 20px;
+    }
+    
+    #registrationForm {
+        max-width: 800px;
+    }
+    
+    
+    fieldset {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 20px;
+    }
+
+    .button-group {
+        justify-content: flex-start;
+    }
+
+    .button-group button {
+        flex-grow: 0;
+        min-width: 150px;
+    }
+    
+
+    #experienceLevel, #experienceValue {
+        width: auto;
+    }
+}
