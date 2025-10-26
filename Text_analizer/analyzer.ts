@@ -27,18 +27,7 @@ const STOP_WORDS: Set<string> = new Set([
 
 // -------------------------- FUNCIONES AUXILIARES --------------------------
 
-/**
- * @function getWords
- * CORRECCIÓN: La regex ahora está marcada como global ('g') y case-insensitive ('i')
- * para garantizar la extracción correcta y uniforme de todas las palabras.
- * Esto asegura que 'casa', 'Casa', 'CASA.', etc. se cuenten como 'casa' (resuelve Test 4)
- * y que las longitudes sean correctas (resuelve Test 6).
- * @param {string} text - El texto a procesar.
- * @returns {string[]} Un array de palabras en minúsculas.
- */
 function getWords(text: string): string[] {
-    // Busca secuencias de letras y números (elimina la puntuación).
-    // Nota: El flag 'i' es para ignorar mayúsculas en el match.
     const wordRegex = /[a-záéíóúüñ0-9]+/gi; 
     
     // El .match() devuelve un array de palabras, que luego mapeamos a minúsculas.
@@ -58,12 +47,6 @@ function countSentences(text: string): number {
 }
 
 
-/**
- * @function countParagraphs
- * La corrección anterior ya resolvió el Test 3.
- * @param {string} text - El texto a analizar.
- * @returns {number} El número total de párrafos.
- */
 function countParagraphs(text: string): number {
     const trimmedText = text.trim();
     if (trimmedText === "") {
