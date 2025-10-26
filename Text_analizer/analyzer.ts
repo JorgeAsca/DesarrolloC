@@ -1,4 +1,4 @@
- interface TextStatistics {
+ export interface TextStatistics {
     characterCount: number;         
     characterCountNoSpaces: number; 
     wordCount: number;              
@@ -10,6 +10,8 @@
     wordFrequency: Map<string, number>; 
     topKeywords: [string, number][]; 
 }
+
+
 
 
 const STOP_WORDS: Set<string> = new Set([
@@ -92,7 +94,7 @@ function getTopKeywords(wordFrequency: Map<string, number>): [string, number][] 
 // -------------------------- FUNCIÓN PRINCIPAL --------------------------
 
 
- function analyzeText(text: string): TextStatistics {
+ export function analyzeText(text: string): TextStatistics {
     // Limpia y normaliza el texto para el análisis
     const words = getWords(text);
     const wordCount = words.length;
